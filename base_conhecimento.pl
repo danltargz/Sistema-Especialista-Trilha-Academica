@@ -38,3 +38,10 @@ pergunta(8, 'Voce se interessa por redes de computadores?', redes).
 pergunta(9, 'Voce curte sistemas operacionais e baixo nivel?', sistemas_operacionais).
 pergunta(10,'Voce se interessa por seguranca?', conformidade).
 pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
+
+
+/** 
+trilha(T, Desc).
+perfil(inteligencia_artificial, C, P).
+pergunta(Id, Texto, Carac).
+*/
