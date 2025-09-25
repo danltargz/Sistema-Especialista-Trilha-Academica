@@ -25,3 +25,16 @@ perfil(seguranca_da_informacao, conformidade, 3).
 perfil(redes_e_infraestrutura, redes, 5).
 perfil(redes_e_infraestrutura, sistemas_operacionais, 4).
 perfil(redes_e_infraestrutura, cloud, 4).
+
+% Perguntas (id, texto, caracteristica) – respostas esperadas: s/n
+pergunta(1, 'Voce curte logica de programacao?', logica_programacao).
+pergunta(2, 'Voce tem afinidade com matematica ou estatistica?', matematica_estatistica).
+pergunta(3, 'Voce programa em Python?', programacao_python).
+pergunta(4, 'Voce gosta de design e interfaces?', design_visual).
+pergunta(5, 'Voce curte JavaScript e web?', programacao_javascript).
+pergunta(6, 'Voce gosta de bancos de dados?', bancos_de_dados).
+pergunta(7, 'Voce curte contar historias com dados?', storytelling_dados).
+pergunta(8, 'Voce se interessa por redes de computadores?', redes).
+pergunta(9, 'Voce curte sistemas operacionais e baixo nivel?', sistemas_operacionais).
+pergunta(10,'Voce se interessa por seguranca?', conformidade).
+pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
