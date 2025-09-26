@@ -39,6 +39,17 @@ pergunta(9, 'Voce curte sistemas operacionais e baixo nivel?', sistemas_operacio
 pergunta(10,'Voce se interessa por seguranca?', conformidade).
 pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
 
+:- dynamic resposta/2
+
+% Calcula a pontuação de uma trilha somando os pesos das características
+calcula_pontuacao(Trilha, Pontuacao) :-
+    trilha(Trilha, _),
+    findall(Peso,
+        (perfil(Trilha, Caracteristica, Peso),
+         pergunta(N, _, Caracteristica),
+         resposta(N, s)),
+        Pesos),
+    sum_list(Pesos, Pontuacao).
 
 /** 
 trilha(T, Desc).
