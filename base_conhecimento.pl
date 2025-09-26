@@ -58,6 +58,14 @@ recomenda(Ranking) :-
         Resultados),
     sort(2, @>=, Resultados, Ranking). 
 
+% Exibe o ranking de forma organizada
+exibe_resultado([]).
+exibe_resultado([[Trilha, Pontuacao] | T]) :-
+    trilha(Trilha, Descricao),
+    format('~nTrilha: ~w (~w pontos)~nDescricao ~w~n',
+           [Trilha, Pontuacao, Descricao]),
+    exibe_resultado(T).
+
 /** 
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
