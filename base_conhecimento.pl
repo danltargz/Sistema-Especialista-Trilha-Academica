@@ -66,8 +66,29 @@ exibe_resultado([[Trilha, Pontuacao] | T]) :-
            [Trilha, Pontuacao, Descricao]),
     exibe_resultado(T).
 
-/** 
+/*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
 pergunta(Id, Texto, Carac).
+*/
+
+/*
+Respostas de teste
+resposta(1, s).
+resposta(2, s).
+resposta(3, n).
+resposta(4, s).
+resposta(5, n).
+resposta(6, n).
+resposta(7, s).
+resposta(8, s).
+resposta(9, n).
+resposta(10, s).
+resposta(11, n).
+*/
+
+/*
+Queries usada para teste
+calcula_pontuacao(redes_e_infraestrutura, P). -> Exibe a pontuação de uma trilha específica
+recomenda(R), exibe_resultado(R). -> Exibe o ranking formatado.
 */
