@@ -51,6 +51,13 @@ calcula_pontuacao(Trilha, Pontuacao) :-
         Pesos),
     sum_list(Pesos, Pontuacao).
 
+% Gera uma lista ordenada pela pontuação em ordem decrescente
+recomenda(Ranking) :-
+    findall([Trilha, Pontuacao],
+        calcula_pontuacao(Trilha, Pontuacao),
+        Resultados),
+    sort(2, @>=, Resultados, Ranking). 
+
 /** 
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
