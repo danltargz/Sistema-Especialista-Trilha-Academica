@@ -53,7 +53,7 @@ calcula_pontuacao(Trilha, Pontuacao) :-
 
 % Gera uma lista ordenada pela pontuação em ordem decrescente
 recomenda(Ranking) :-
-    findall([Trilha, Pontuacao],
+    findall(pontuacao(Trilha, Pontuacao),
         calcula_pontuacao(Trilha, Pontuacao),
         Resultados),
     sort(2, @>=, Resultados, Ranking). 
