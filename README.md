@@ -1,15 +1,9 @@
-# Sistema Especialista para Recomendação de Trilha Acadêmica
+## Sistema Especialista para Recomendação de Trilha Acadêmica
 
-## Instituição:
-**Pontifícia Universidade Católica do Paraná (PUCPR)**
-
-## Disciplina:
-**Programação Lógica e Funcional**
-
-## Professor:
-**Frank Coelho de Alcantara**
-
-## Alunos:
+**Instituição:** Pontifícia Universidade Católica do Paraná 
+**Disciplina:** Programação Lógica e Funcional
+**Professor:** Frank Coelho de Alcantara
+**Alunos:**
 - Danillo Gonçalves Camargo da Silva - [danltargz](https://github.com/danltargz)  
 - Guilherme Felippe Lazari - [Guilherme006](https://github.com/Guilherme006)  
 - Rodrigo Schiavinatto Plassmann - [rodrigoplassmann](https://github.com/rodrigoplassmann)  
