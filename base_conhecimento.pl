@@ -39,7 +39,7 @@ pergunta(9, 'Voce curte sistemas operacionais e baixo nivel?', sistemas_operacio
 pergunta(10,'Voce se interessa por seguranca?', conformidade).
 pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
 
-:- dynamic resposta/2
+:- dynamic resposta/2.
 
 % Calcula a pontuação de uma trilha somando os pesos das características
 calcula_pontuacao(Trilha, Pontuacao) :-
@@ -60,7 +60,7 @@ recomenda(Ranking) :-
 
 % Exibe o ranking de forma organizada
 exibe_resultado([]).
-exibe_resultado([[Trilha, Pontuacao] | T]) :-
+exibe_resultado([pontuacao(Trilha, Pontuacao)|T]) :-
     trilha(Trilha, Descricao),
     format('~nTrilha: ~w (~w pontos)~nDescricao ~w~n',
            [Trilha, Pontuacao, Descricao]),
