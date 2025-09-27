@@ -13,7 +13,7 @@
 
 ## Instalação do SWI-Prolog:
 
-### Linux (Debian/Ubuntu)
+**Linux (Debian/Ubuntu):**
 ```
 sudo apt install swi-prolog
 ```
