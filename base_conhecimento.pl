@@ -74,6 +74,15 @@ faz_perguntas :-
     fail.   
 faz_perguntas.  
 
+% Pergunta individual
+perguntar(Id, Texto) :-
+    format('~w (s/n): ', [Texto]),
+    read(Input0),
+    ( Input0 = s -> Resp = s
+    ; Input0 = n -> Resp = n
+    ; Resp = invalid ),
+    validar_resposta(Id, Resp).
+
 /*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
