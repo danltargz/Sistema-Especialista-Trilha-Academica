@@ -22,10 +22,10 @@ sudo apt install swi-prolog
 brew install swi-prolog
 ```
 
-### Windows
-#### 1. [SWI-Prolog Download](https://www.swi-prolog.org/download/stable)
-#### 2. Baixe o instalador ```.exe```
-#### 3. O execute e siga as instruções de instalação.
+**Windows:**
+1. [SWI-Prolog Download](https://www.swi-prolog.org/download/stable)
+2. Baixe o instalador ```.exe```
+3. O execute e siga as instruções de instalação.
 
 ---
 
