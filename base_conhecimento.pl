@@ -93,6 +93,11 @@ validar_resposta(Id, invalid) :-
     pergunta(Id, Texto, _),
     perguntar(Id, Texto).
 
+iniciar :-
+	faz_perguntas,
+    recomenda(Ranking),
+    exibe_resultado(Ranking).
+
 /*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
