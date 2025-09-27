@@ -39,7 +39,7 @@ pergunta(9, 'Voce curte sistemas operacionais e baixo nivel?', sistemas_operacio
 pergunta(10,'Voce se interessa por seguranca?', conformidade).
 pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
 
-:- dynamic resposta/2
+:- dynamic resposta/2.
 
 % Calcula a pontuação de uma trilha somando os pesos das características
 calcula_pontuacao(Trilha, Pontuacao) :-
@@ -65,6 +65,14 @@ exibe_resultado([[Trilha, Pontuacao] | T]) :-
     format('~nTrilha: ~w (~w pontos)~nDescricao ~w~n',
            [Trilha, Pontuacao, Descricao]),
     exibe_resultado(T).
+
+
+% Percorre todas as perguntas
+faz_perguntas :-
+    pergunta(Id, Texto, _),
+    perguntar(Id, Texto),
+    fail.   
+faz_perguntas.  
 
 /*
 trilha(T, Desc).
