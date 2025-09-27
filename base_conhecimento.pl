@@ -83,6 +83,16 @@ perguntar(Id, Texto) :-
     ; Resp = invalid ),
     validar_resposta(Id, Resp).
 
+% Garante que a resposta seja apenas s/n
+validar_resposta(Id, s) :-
+    assertz(resposta(Id, s)).
+validar_resposta(Id, n) :-
+    assertz(resposta(Id, n)).
+validar_resposta(Id, invalid) :-
+    writeln('Entrada inválida! Digite apenas s ou n.'),
+    pergunta(Id, Texto, _),
+    perguntar(Id, Texto).
+
 /*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
