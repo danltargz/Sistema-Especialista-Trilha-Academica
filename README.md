@@ -17,7 +17,7 @@
 ```
 sudo apt install swi-prolog
 ```
-### MacOS (Homebrew)
+**MacOS (Homebrew):**
 ```
 brew install swi-prolog
 ```
