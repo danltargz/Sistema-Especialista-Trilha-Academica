@@ -221,6 +221,20 @@ perguntar(Id, Texto) :-
     retractall(resposta(Id, _)),
     assertz(resposta(Id, Resp)).
 
+% Função para mostrar todos os resultados caso o usuário queira saber
+mostrar_completo(_) :-
+    format("Deseja ver o ranking completo? (s/n):~n", []),
+    read_line_to_string(user_input, Entrada),
+    ( sub_string(S, 0, 1, _, "s") -> 
+        recomenda(Ranking),
+        format("~n=== Ranking Completo ===~n", []),
+        exibe_resultado(Ranking)
+    ; sub_string(S, 0, 1, _, "n") ->
+        format("~nObrigado por usar o sistema de recomendação!~n", [])
+    ; format("Entrada inválida. Digite apenas 's' ou 'n'.~n", []),
+      mostrar_completo(_)        
+    ).
+
 iniciar :-
     limpar_respostas,
     faz_perguntas,
