@@ -70,34 +70,30 @@ exibe_resultado([pontuacao(Trilha, Pontuacao, Caracteristicas)|T]) :-
     exibe_resultado(T).
 
 
+% Limpa as respostas antes de fazer as perguntas
+limpar_respostas :-
+    retractall(resposta(_, _)).
+
 % Percorre todas as perguntas
 faz_perguntas :-
-    pergunta(Id, Texto, _),
-    perguntar(Id, Texto),
-    fail.   
-faz_perguntas.  
+    forall(pergunta(Id, Texto, _),
+           perguntar(Id, Texto)).
 
 % Pergunta individual
 perguntar(Id, Texto) :-
-    format('~w (s/n): ', [Texto]),
-    read(Input0),
-    ( Input0 = s -> Resp = s
-    ; Input0 = n -> Resp = n
-    ; Resp = invalid ),
-    validar_resposta(Id, Resp).
-
-% Garante que a resposta seja apenas s/n
-validar_resposta(Id, s) :-
-    assertz(resposta(Id, s)).
-validar_resposta(Id, n) :-
-    assertz(resposta(Id, n)).
-validar_resposta(Id, invalid) :-
-    writeln('Entrada inválida! Digite apenas s ou n.'),
-    pergunta(Id, Texto, _),
-    perguntar(Id, Texto).
+    format('~w~n', [Texto]),
+    read_line_to_string(user_input, S),
+    ( sub_string(S, 0, 1, _, "s") -> Resp = s
+    ; sub_string(S, 0, 1, _, "n") -> Resp = n
+    ; format('Entrada invalida. Responda com s/n.~n', []),
+      !, perguntar(Id, Texto)
+    ),
+    retractall(resposta(Id, _)),
+    assertz(resposta(Id, Resp)).
 
 iniciar :-
-	faz_perguntas,
+    limpar_respostas,
+    faz_perguntas,
     recomenda(Ranking),
     exibe_resultado(Ranking).
 
