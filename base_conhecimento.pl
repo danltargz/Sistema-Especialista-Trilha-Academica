@@ -183,7 +183,13 @@ recomenda(Ranking) :-
     findall(pontuacao(Trilha, Pontuacao, Caracteristicas),
         calcula_pontuacao(Trilha, Pontuacao, Caracteristicas),
         Resultados),
-    sort(2, @>=, Resultados, Ranking). 
+    sort(2, @>=, Resultados, Ranking).
+
+% Função para retornar as trilhas com maior pontuação
+recomenda_maiores(N, TopN) :-
+    recomenda(Ranking),
+    length(TopN, N),
+    append(TopN, _, Ranking).
 
 % Exibe o ranking de forma organizada
 exibe_resultado([]).
