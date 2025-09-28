@@ -213,8 +213,8 @@ faz_perguntas :-
 perguntar(Id, Texto) :-
     format('~w~n', [Texto]),
     read_line_to_string(user_input, S),
-    ( sub_string(S, 0, 1, _, "s") -> Resp = s
-    ; sub_string(S, 0, 1, _, "n") -> Resp = n
+    ( sub_string(S, 0, 1, _, "s") ; sub_string(S, 0, 1, _, "S") -> Resp = s
+    ; sub_string(S, 0, 1, _, "n") ; sub_string(S, 0, 1, _, "N") -> Resp = n
     ; format('Entrada invalida. Responda com s/n.~n', []),
       !, perguntar(Id, Texto)
     ),
@@ -222,17 +222,16 @@ perguntar(Id, Texto) :-
     assertz(resposta(Id, Resp)).
 
 % Função para mostrar todos os resultados caso o usuário queira saber
-mostrar_completo(_) :-
-    format("Deseja ver o ranking completo? (s/n):~n", []),
-    read_line_to_string(user_input, S),
-    ( sub_string(S, 0, 1, _, "s") -> 
+mostrar_completo(Opcao) :-
+    ( sub_string(Opcao, 0, 1, _, "s") ; sub_string(Opcao, 0, 1, _, "S") ->
         recomenda(Ranking),
         format("~n=== Ranking Completo ===~n", []),
         exibe_resultado(Ranking)
-    ; sub_string(S, 0, 1, _, "n") ->
+    ; sub_string(Opcao, 0, 1, _, "n") ; sub_string(Opcao, 0, 1, _, "N") ->
         format("~nObrigado por usar o sistema de recomendação!~n", [])
     ; format("Entrada inválida. Digite apenas 's' ou 'n'.~n", []),
-      mostrar_completo(_)        
+      read_line_to_string(user_input, NovaOpcao),
+      mostrar_completo(NovaOpcao)
     ).
 
 iniciar :-
