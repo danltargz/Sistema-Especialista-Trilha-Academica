@@ -163,9 +163,59 @@ pergunta(53, 'Voce se preocupa com acessibilidade na web?', acessibilidade_web).
 pergunta(54, 'Voce quer trabalhar com criptografia?', criptografia).
 pergunta(55, 'Voce tem interesse em auditoria e logs?', auditoria_logs).
 
+:- dynamic resposta/2.
 
-/** 
+% Calcula a pontuação de uma trilha somando os pesos das características
+calcula_pontuacao(Trilha, Pontuacao, Caracteristicas) :-
+    trilha(Trilha, _),
+    findall((Caracteristica, Peso),
+        (perfil(Trilha, Caracteristica, Peso),
+         pergunta(N, _, Caracteristica),
+         resposta(N, s)),
+        Lista),
+    findall(P, member((_, P), Lista), Pesos),
+    sum_list(Pesos, Pontuacao),
+    findall(C, member((C, _), Lista), CaracteristicasDup),
+	list_to_set(CaracteristicasDup, Caracteristicas).
+
+% Gera uma lista ordenada pela pontuação em ordem decrescente
+recomenda(Ranking) :-
+    findall(pontuacao(Trilha, Pontuacao, Caracteristicas),
+        calcula_pontuacao(Trilha, Pontuacao, Caracteristicas),
+        Resultados),
+    sort(2, @>=, Resultados, Ranking). 
+
+% Exibe o ranking de forma organizada
+exibe_resultado([]).
+exibe_resultado([pontuacao(Trilha, Pontuacao, Caracteristicas)|T]) :-
+    trilha(Trilha, Descricao),
+    format('~nTrilha: ~w (~w pontos)~nDescricao: ~w~nCaracterísticas: ~w~n',
+           [Trilha, Pontuacao, Descricao, Caracteristicas]),
+    exibe_resultado(T).
+
+/*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
 pergunta(Id, Texto, Carac).
+*/
+
+/*
+Respostas de teste
+resposta(1, s).
+resposta(2, s).
+resposta(3, n).
+resposta(4, s).
+resposta(5, n).
+resposta(6, n).
+resposta(7, s).
+resposta(8, s).
+resposta(9, n).
+resposta(10, s).
+resposta(11, n).
+*/
+
+/*
+Queries usada para teste
+calcula_pontuacao(redes_e_infraestrutura, P, C). -> Exibe a pontuação de uma trilha específica
+recomenda(R), exibe_resultado(R). -> Exibe o ranking formatado.
 */
