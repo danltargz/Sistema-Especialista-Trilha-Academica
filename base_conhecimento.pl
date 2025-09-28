@@ -224,7 +224,7 @@ perguntar(Id, Texto) :-
 % Função para mostrar todos os resultados caso o usuário queira saber
 mostrar_completo(_) :-
     format("Deseja ver o ranking completo? (s/n):~n", []),
-    read_line_to_string(user_input, Entrada),
+    read_line_to_string(user_input, S),
     ( sub_string(S, 0, 1, _, "s") -> 
         recomenda(Ranking),
         format("~n=== Ranking Completo ===~n", []),
@@ -238,8 +238,12 @@ mostrar_completo(_) :-
 iniciar :-
     limpar_respostas,
     faz_perguntas,
-    recomenda(Ranking),
-    exibe_resultado(Ranking).
+    recomenda_maiores(3, Top3),
+    format("~n=== Top 3 Trilhas Recomendadas ===~n", []),
+    exibe_resultado(Top3),
+    format("~nDeseja ver o ranking completo? (s/n):~n", []),
+    read_line_to_string(user_input, Opcao),
+    mostrar_completo(Opcao).
 
 /*
 trilha(T, Desc).
