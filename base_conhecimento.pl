@@ -42,28 +42,31 @@ pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
 :- dynamic resposta/2.
 
 % Calcula a pontuação de uma trilha somando os pesos das características
-calcula_pontuacao(Trilha, Pontuacao) :-
+calcula_pontuacao(Trilha, Pontuacao, Caracteristicas) :-
     trilha(Trilha, _),
     findall(Peso,
         (perfil(Trilha, Caracteristica, Peso),
          pergunta(N, _, Caracteristica),
          resposta(N, s)),
-        Pesos),
-    sum_list(Pesos, Pontuacao).
+        Lista),
+    findall(P, member((_, P), Lista), Pesos),
+    sum_list(Pesos, Pontuacao),
+    findall(C, member((C, _), Lista), CaracteristicasDup),
+	list_to_set(CaracteristicasDup, Caracteristicas).
 
 % Gera uma lista ordenada pela pontuação em ordem decrescente
 recomenda(Ranking) :-
-    findall(pontuacao(Trilha, Pontuacao),
-        calcula_pontuacao(Trilha, Pontuacao),
+    findall(pontuacao(Trilha, Pontuacao, Caracteristicas),
+        calcula_pontuacao(Trilha, Pontuacao, Caracteristicas),
         Resultados),
     sort(2, @>=, Resultados, Ranking). 
 
 % Exibe o ranking de forma organizada
 exibe_resultado([]).
-exibe_resultado([pontuacao(Trilha, Pontuacao)|T]) :-
+exibe_resultado([pontuacao(Trilha, Pontuacao, Caracteristicas)|T]) :-
     trilha(Trilha, Descricao),
-    format('~nTrilha: ~w (~w pontos)~nDescricao ~w~n',
-           [Trilha, Pontuacao, Descricao]),
+    format('~nTrilha: ~w (~w pontos)~nDescricao: ~w~nCaracterísticas: ~w~n',
+           [Trilha, Pontuacao, Descricao, Caracteristicas]),
     exibe_resultado(T).
 
 /*
@@ -89,6 +92,6 @@ resposta(11, n).
 
 /*
 Queries usada para teste
-calcula_pontuacao(redes_e_infraestrutura, P). -> Exibe a pontuação de uma trilha específica
+calcula_pontuacao(redes_e_infraestrutura, P, C). -> Exibe a pontuação de uma trilha específica
 recomenda(R), exibe_resultado(R). -> Exibe o ranking formatado.
 */
