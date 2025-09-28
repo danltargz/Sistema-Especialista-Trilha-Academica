@@ -212,26 +212,33 @@ faz_perguntas :-
 % Pergunta individual
 perguntar(Id, Texto) :-
     format('~w~n', [Texto]),
-    read_line_to_string(user_input, S),
-    ( sub_string(S, 0, 1, _, "s") ; sub_string(S, 0, 1, _, "S") -> Resp = s
-    ; sub_string(S, 0, 1, _, "n") ; sub_string(S, 0, 1, _, "N") -> Resp = n
-    ; format('Entrada invalida. Responda com s/n.~n', []),
-      !, perguntar(Id, Texto)
-    ),
+    repeat,
+        read_line_to_string(user_input, S0),
+        normalize_space(string(S1), S0),
+        string_lower(S1, S),
+        ( S = "s" -> Resp = s
+        ; S = "n" -> Resp = n
+        ; writeln('Entrada invalida! Digite s ou n.'), fail
+        ),
+    !,
     retractall(resposta(Id, _)),
     assertz(resposta(Id, Resp)).
 
+
 % Função para mostrar todos os resultados caso o usuário queira saber
 mostrar_completo(Opcao) :-
-    ( sub_string(Opcao, 0, 1, _, "s") ; sub_string(Opcao, 0, 1, _, "S") ->
+    normalize_space(string(S1), Opcao),
+    string_lower(S1, S),
+    ( S = "s" ->
         recomenda(Ranking),
         format("~n=== Ranking Completo ===~n", []),
         exibe_resultado(Ranking)
-    ; sub_string(Opcao, 0, 1, _, "n") ; sub_string(Opcao, 0, 1, _, "N") ->
-        format("~nObrigado por usar o sistema de recomendação!~n", [])
-    ; format("Entrada inválida. Digite apenas 's' ou 'n'.~n", []),
-      read_line_to_string(user_input, NovaOpcao),
-      mostrar_completo(NovaOpcao)
+    ; S = "n" ->
+        format("~nObrigado por usar o sistema de recomendacao!~n", [])
+    ; 
+      writeln("Entrada invalida. Digite apenas 's' ou 'n'."),
+      read_line_to_string(user_input, S2),
+      mostrar_completo(S2)
     ).
 
 iniciar :-
