@@ -44,7 +44,7 @@ pergunta(11,'Voce tem interesse em cloud e infraestrutura?', cloud).
 % Calcula a pontuação de uma trilha somando os pesos das características
 calcula_pontuacao(Trilha, Pontuacao, Caracteristicas) :-
     trilha(Trilha, _),
-    findall(Peso,
+    findall((Caracteristica, Peso),
         (perfil(Trilha, Caracteristica, Peso),
          pergunta(N, _, Caracteristica),
          resposta(N, s)),
