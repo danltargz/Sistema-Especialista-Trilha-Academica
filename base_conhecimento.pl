@@ -193,6 +193,34 @@ exibe_resultado([pontuacao(Trilha, Pontuacao, Caracteristicas)|T]) :-
            [Trilha, Pontuacao, Descricao, Caracteristicas]),
     exibe_resultado(T).
 
+
+% Limpa as respostas antes de fazer as perguntas
+limpar_respostas :-
+    retractall(resposta(_, _)).
+
+% Percorre todas as perguntas
+faz_perguntas :-
+    forall(pergunta(Id, Texto, _),
+           perguntar(Id, Texto)).
+
+% Pergunta individual
+perguntar(Id, Texto) :-
+    format('~w~n', [Texto]),
+    read_line_to_string(user_input, S),
+    ( sub_string(S, 0, 1, _, "s") -> Resp = s
+    ; sub_string(S, 0, 1, _, "n") -> Resp = n
+    ; format('Entrada invalida. Responda com s/n.~n', []),
+      !, perguntar(Id, Texto)
+    ),
+    retractall(resposta(Id, _)),
+    assertz(resposta(Id, Resp)).
+
+iniciar :-
+    limpar_respostas,
+    faz_perguntas,
+    recomenda(Ranking),
+    exibe_resultado(Ranking).
+
 /*
 trilha(T, Desc).
 perfil(inteligencia_artificial, C, P).
