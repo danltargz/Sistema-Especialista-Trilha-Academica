@@ -183,7 +183,13 @@ recomenda(Ranking) :-
     findall(pontuacao(Trilha, Pontuacao, Caracteristicas),
         calcula_pontuacao(Trilha, Pontuacao, Caracteristicas),
         Resultados),
-    sort(2, @>=, Resultados, Ranking). 
+    sort(2, @>=, Resultados, Ranking).
+
+% Função para retornar as trilhas com maior pontuação
+recomenda_maiores(N, TopN) :-
+    recomenda(Ranking),
+    length(TopN, N),
+    append(TopN, _, Ranking).
 
 % Exibe o ranking de forma organizada
 exibe_resultado([]).
@@ -206,20 +212,44 @@ faz_perguntas :-
 % Pergunta individual
 perguntar(Id, Texto) :-
     format('~w~n', [Texto]),
-    read_line_to_string(user_input, S),
-    ( sub_string(S, 0, 1, _, "s") -> Resp = s
-    ; sub_string(S, 0, 1, _, "n") -> Resp = n
-    ; format('Entrada invalida. Responda com s/n.~n', []),
-      !, perguntar(Id, Texto)
-    ),
+    repeat,
+        read_line_to_string(user_input, S0),
+        normalize_space(string(S1), S0),
+        string_lower(S1, S),
+        ( S = "s" -> Resp = s
+        ; S = "n" -> Resp = n
+        ; writeln('Entrada invalida! Digite s ou n.'), fail
+        ),
+    !,
     retractall(resposta(Id, _)),
     assertz(resposta(Id, Resp)).
+
+
+% Função para mostrar todos os resultados caso o usuário queira saber
+mostrar_completo(Opcao) :-
+    normalize_space(string(S1), Opcao),
+    string_lower(S1, S),
+    ( S = "s" ->
+        recomenda(Ranking),
+        format("~n=== Ranking Completo ===~n", []),
+        exibe_resultado(Ranking)
+    ; S = "n" ->
+        format("~nObrigado por usar o sistema de recomendacao!~n", [])
+    ; 
+      writeln("Entrada invalida. Digite apenas 's' ou 'n'."),
+      read_line_to_string(user_input, S2),
+      mostrar_completo(S2)
+    ).
 
 iniciar :-
     limpar_respostas,
     faz_perguntas,
-    recomenda(Ranking),
-    exibe_resultado(Ranking).
+    recomenda_maiores(3, Top3),
+    format("~n=== Top 3 Trilhas Recomendadas ===~n", []),
+    exibe_resultado(Top3),
+    format("~nDeseja ver o ranking completo? (s/n):~n", []),
+    read_line_to_string(user_input, Opcao),
+    mostrar_completo(Opcao).
 
 /*
 trilha(T, Desc).
