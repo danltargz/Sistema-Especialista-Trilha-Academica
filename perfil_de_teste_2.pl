@@ -1,5 +1,4 @@
 % Perfil: Aluno inclinado para DevOps/SRE
-
 resposta(1, n).
 resposta(2, n).
 resposta(3, n).
