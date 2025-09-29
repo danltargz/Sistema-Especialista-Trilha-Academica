@@ -1,5 +1,4 @@
 % Perfil: Aluno inclinado para Jogos Digitais
-
 resposta(1, s).
 resposta(2, n).
 resposta(3, n).

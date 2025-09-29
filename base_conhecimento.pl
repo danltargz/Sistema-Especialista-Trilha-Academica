@@ -1,3 +1,4 @@
+
 % Trilhas 
 trilha(inteligencia_artificial, 'IA: modelos e resolucao de problemas complexos.').
 trilha(desenvolvimento_web, 'Web: construcao de apps web frontend/backend.').
@@ -251,29 +252,15 @@ iniciar :-
     read_line_to_string(user_input, Opcao),
     mostrar_completo(Opcao).
 
-/*
-trilha(T, Desc).
-perfil(inteligencia_artificial, C, P).
-pergunta(Id, Texto, Carac).
-*/
-
-/*
-Respostas de teste
-resposta(1, s).
-resposta(2, s).
-resposta(3, n).
-resposta(4, s).
-resposta(5, n).
-resposta(6, n).
-resposta(7, s).
-resposta(8, s).
-resposta(9, n).
-resposta(10, s).
-resposta(11, n).
-*/
-
-/*
-Queries usada para teste
-calcula_pontuacao(redes_e_infraestrutura, P, C). -> Exibe a pontuação de uma trilha específica
-recomenda(R), exibe_resultado(R). -> Exibe o ranking formatado.
-*/
+rodar_teste(ArquivoPerfil) :-
+    consult(ArquivoPerfil),
+    recomenda_maiores(3, Top3),
+    format("~n=== Top 3 Trilhas Recomendadas ===~n", []),
+    exibe_resultado(Top3),
+    (   current_predicate(ver_todas/1), ver_todas(s) ->
+            recomenda(Ranking),
+            format("~n=== Ranking Completo ===~n", []),
+            exibe_resultado(Ranking)
+    ;   current_predicate(ver_todas/1), ver_todas(n) ->
+            format("~nObrigado por usar o sistema de recomendacao!~n", [])
+    ).

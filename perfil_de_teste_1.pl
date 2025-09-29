@@ -1,5 +1,4 @@
 % Perfil: Aluno inclinado para Inteligência Artificial
-
 resposta(1, s).
 resposta(2, s).
 resposta(3, s).
